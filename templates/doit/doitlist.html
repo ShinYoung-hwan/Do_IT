@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-3">
+
+    <div>
+        <h2>
+            <div>TODO</div>
+            <div><a href="{% url 'doit:create_item' %}">생성</a></div>
+        </h2>
+        {% for todo_item in todo_list %}
+        <div>
+            <a href="{% url 'doit:detail' todo_item.id %}">{{ todo_item.subject }}</a>
+            <div>{{ todo_item.done_date }}</div>
+            <a href="{% url 'doit:finish' todo_item.id %}">완료</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <h2>DONE</h2>
+        {% for done_item in done_list %}
+        <div>
+            <a href="{% url 'doit:detail' done_item.id %}">{{ done_item.subject }}</a>
+            <div>{{ done_item.done_date }}</div>
+            <a href="{% url 'doit:delete' done_item.id %}">삭제</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock  %}
