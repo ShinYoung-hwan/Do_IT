@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load doit_filter %}
 {% block content %}
 <div class="container">
     <h5 class="my-3 border-bottom pb-2">작성하기</h5>
@@ -49,11 +50,12 @@
     const create_time_item = document.getElementById('create_date')
     function setTime(){
         var now = new Date()
-        date = [now.getFullYear(), now.getMonth(), now.getDate()]
+        date = [now.getFullYear(), now.getMonth()+1, now.getDate()]
         time = [now.getHours(), now.getMinutes(), now.getSeconds()]
         str_now = date.join('-') + ' ' + time.join(':')
         create_time_item.value = str_now
     }
+    setTime()
     setInterval(setTime, 1000)
   </script>
 {% endblock %}
