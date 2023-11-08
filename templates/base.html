@@ -7,12 +7,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-        <!-- pybo CSS -->
+        <!-- Bootstrap Icon -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+        <!-- custom CSS -->
         <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-        <title>Hello, pybo!</title>
+        <title>Do IT!</title>
     </head>
+    
     <body>
     {% include "navbar.html" %}
+
     <!-- 기본 템플릿 안에 삽입될 내용 Start -->
     {% block content %}
     {% endblock %}

@@ -1,30 +1,68 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% block content %}
 <div class="container my-3">
+    <div class="d-flex">
+        <div class="flex-grow-1 bg-light rounded-2 p-2 me-1 w-50">
+            <div class="d-flex align-items-center">
+                <h2>TODO</h2>
+                <div >
+                    <a class="btn btn-primary btn-sm mb-2 ms-1 text-nowrap" href="{% url 'doit:create_item' %}"><i class="bi bi-plus text-white"></i></a>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">마감기한</th>
+                        <th scope="col">완료 / 삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo_item in todo_list %}
+                    <tr class="text-center">
+                        <td scope="row">{{ forloop.counter }}</td>
+                        <td><a class="" href="{% url 'doit:detail' todo_item.id %}">{{ todo_item.subject }}</a></td>
+                        <td>{{ todo_item.done_date|naturaltime }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-success me-1" href="{% url 'doit:finish_item' todo_item.id %}"><i class="bi bi-check"></i></a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'doit:delete_item' todo_item.id %}"><i class="bi bi-x"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-    <div>
-        <h2>
-            <div>TODO</div>
-            <div><a href="{% url 'doit:create_item' %}">생성</a></div>
-        </h2>
-        {% for todo_item in todo_list %}
-        <div>
-            <a href="{% url 'doit:detail' todo_item.id %}">{{ todo_item.subject }}</a>
-            <div>{{ todo_item.done_date }}</div>
-            <a href="{% url 'doit:finish' todo_item.id %}">완료</a>
         </div>
-        {% endfor %}
-    </div>
 
-    <div>
-        <h2>DONE</h2>
-        {% for done_item in done_list %}
-        <div>
-            <a href="{% url 'doit:detail' done_item.id %}">{{ done_item.subject }}</a>
-            <div>{{ done_item.done_date }}</div>
-            <a href="{% url 'doit:delete' done_item.id %}">삭제</a>
+        <div class="flex-grow-1 bg-light rounded-2 p-2 w-50">
+            <h2>DONE</h2>
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">#</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">마감기한</th>
+                        <th scope="col">미완료 / 삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for done_item in done_list %}
+                    <tr class="text-center">
+                        <td scope="row">{{ forloop.counter }}</td>
+                        <td><a class="" href="{% url 'doit:detail' done_item.id %}">{{ done_item.subject }}</a></td>
+                        <td>{{ done_item.done_date|naturaltime }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-warning", href="{% url 'doit:back_item' done_item.id %}"><i class="bi bi-box-arrow-in-left"></i></a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'doit:delete_item' done_item.id %}"><i class="bi bi-x"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
         </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock  %}

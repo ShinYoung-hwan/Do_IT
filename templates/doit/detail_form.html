@@ -1,10 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="container">
     <h5 class="my-3 border-bottom pb-2">상세보기</h5>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <!-- 오류표시 Start -->
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for field in form %}
+            {% if field.errors %}
+            <div>
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- 오류표시 End -->
+        <!-- 제목 -->
+        <div class="mb-3">
+            <label for="subject" class="form-label">제목</label>
+            <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}">
+        </div>
+        <!-- 생성 일자 -->
+        <div class="mb-3">
+            <label for="create_date" class="form-label">생성일자 <i>format: YYYY-MM-DD HH:MM:SS</i></label>
+            <input type="text" class="form-control" name="create_date" id="create_date" value="{{ form.create_date.value|date:'Y-m-d H:i:s' }}" readonly>
+        </div>
+        <!-- 완료 일자 -->
+        <div class="mb-3">
+            <label for="done_date" class="form-label">완료일자 <i>format: YYYY-MM-DD HH:MM:SS</i></label>
+            <input type="text" class="form-control" name="done_date" id="done_date" value="{{ form.done_date.value|date:'Y-m-d H:i:s' }}">
+        </div>
+        <!-- 내용 -->
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+        <!-- 완료여부 -->
+        <div class="mb-3 form-check form-switch">
+            <input type="checkbox" class="form-check-input" name="is_done" id="is_done" {% if form.is_done.value %} checked {% endif %}>
+            <label for="is_done" class="form-check-label">완료여부</label>
+        </div>
         <button type="submit" class="btn btn-primary">저장하기</button>
     </form>
     
