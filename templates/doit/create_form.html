@@ -23,6 +23,11 @@
             <label for="subject" class="form-label">제목</label>
             <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}">
         </div>
+            <!-- 생성 일자 -->
+            <div class="mb-3">
+                <label for="create_date" class="form-label">생성일자 <i>format: YYYY-MM-DD HH:MM:SS</i></label>
+                <input type="text" class="form-control" name="create_date" id="create_date" value="" readonly>
+            </div>
         <!-- 완료 일자 -->
         <div class="mb-3">
             <label for="done_date" class="form-label">완료일자 <i>format: YYYY-MM-DD HH:MM:SS</i></label>
@@ -39,3 +44,16 @@
     
 </div>
 {% endblock  %}
+{% block script %}
+<script type="text/javascript">
+    const create_time_item = document.getElementById('create_date')
+    function setTime(){
+        var now = new Date()
+        date = [now.getFullYear(), now.getMonth(), now.getDate()]
+        time = [now.getHours(), now.getMinutes(), now.getSeconds()]
+        str_now = date.join('-') + ' ' + time.join(':')
+        create_time_item.value = str_now
+    }
+    setInterval(setTime, 1000)
+  </script>
+{% endblock %}
