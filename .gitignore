@@ -1,1 +1,5 @@
 db.sqlite3
+out
+node_modules
+.DS_Store
+__pycache__
